@@ -1,0 +1,25 @@
+.header {
+  background-color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.header__logo{
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+@media screen and (min-width: 960px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .header__logo{
+    margin-bottom: 0;
+  }
+}
