@@ -1,7 +1,10 @@
+import FormCreateEmployee from '../../components/FormCreateEmployee'
+
 const CreateEmployee = () => {
   return (
-    <main className="createEmployeePage">
-      <h1 className="createEmployeePage__title">Create Employee</h1>
+    <main id="createEmployeePage" className="main">
+      <h1 className="main__title">Create Employee</h1>
+      <FormCreateEmployee />
     </main>
   )
 }

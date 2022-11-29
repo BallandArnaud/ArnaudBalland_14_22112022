@@ -1,7 +1,7 @@
 const Error = () => {
   return (
-    <main className="errorPage">
-      <h1 className="errorPage__title">Oops... nothing here !</h1>
+    <main id="errorPage" className="main">
+      <h1 className="main__title">Oops... nothing here !</h1>
     </main>
   )
 }
