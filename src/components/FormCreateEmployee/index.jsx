@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { states, departments } from '../../data/formData'
+import { addEmployee } from '../../features/employeeSlice'
 
 const FormCreateEmployee = () => {
   const inputFirstName = useRef()
@@ -10,9 +12,27 @@ const FormCreateEmployee = () => {
   const inputZipCode = useRef()
   const [stateAddress, setStateAddress] = useState(states[0].name.toLowerCase())
   const [department, setdepartment] = useState(departments[0].toLowerCase())
+  const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    const abbreviationState = states.find(
+      (state) => state.name === stateAddress
+    ).abbreviation
+
+    dispatch(
+      addEmployee({
+        firstName: inputFirstName.current.value,
+        lastName: inputLastName.current.value,
+        dateOfBirth: inputDateBirth.current.value,
+        department: department,
+        street: inputStreet.current.value,
+        city: inputCity.current.value,
+        state: abbreviationState,
+        zipCode: inputZipCode.current.value,
+      })
+    )
     console.log('formulaire envoyé')
   }
 
@@ -39,10 +59,7 @@ const FormCreateEmployee = () => {
         >
           {states.map((state) => {
             return (
-              <option
-                key={state.name.toLowerCase()}
-                value={state.name.toLowerCase()}
-              >
+              <option key={state.name} value={state.name}>
                 {state.name}
               </option>
             )
@@ -59,7 +76,7 @@ const FormCreateEmployee = () => {
       >
         {departments.map((department) => {
           return (
-            <option key={department} value={department.toLowerCase()}>
+            <option key={department} value={department}>
               {department}
             </option>
           )
