@@ -10,8 +10,8 @@ const FormCreateEmployee = () => {
   const inputStreet = useRef()
   const inputCity = useRef()
   const inputZipCode = useRef()
-  const [stateAddress, setStateAddress] = useState(states[0].name.toLowerCase())
-  const [department, setdepartment] = useState(departments[0].toLowerCase())
+  const [stateAddress, setStateAddress] = useState(states[0].name)
+  const [department, setdepartment] = useState(departments[0])
   const dispatch = useDispatch()
 
   const handleSubmit = (e) => {

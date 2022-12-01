@@ -1,12 +1,18 @@
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { useTable } from 'react-table'
+import {
+  useGlobalFilter,
+  usePagination,
+  useSortBy,
+  useTable,
+} from 'react-table'
 import { selectEmployee } from '../../app/selectors'
 import { isEven } from '../../utils/functionsUtils'
+import GlobalFilter from '../TableGlobalFilter'
+import TablePagination from '../TablePagination'
 
 const TableListEmployee = () => {
   const employeesData = useSelector(selectEmployee())
-  console.log(employeesData)
 
   const data = useMemo(() => employeesData, [employeesData])
 
@@ -48,57 +54,108 @@ const TableListEmployee = () => {
     []
   )
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data })
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    state,
+  } = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination)
 
   return (
-    <table {...getTableProps()} style={{ border: 'solid 1px #777' }}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th
-                {...column.getHeaderProps()}
-                style={{
-                  background: 'aliceblue',
-                  color: 'black',
-                  fontWeight: 'bold',
-                  padding: '10px',
-                }}
-              >
-                {column.render('Header')}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, id) => {
-          prepareRow(row)
-
-          return (
-            <tr
-              {...row.getRowProps()}
-              style={isEven(id) ? { background: '#CCC' } : null}
-            >
-              {row.cells.map((cell) => {
-                return (
-                  <td
-                    {...cell.getCellProps()}
-                    style={{
-                      padding: '10px',
-                    }}
-                  >
-                    {cell.render('Cell')}
-                  </td>
-                )
-              })}
+    <div id="tableListEmployee">
+      <div className="tableListEmployee__header">
+        <GlobalFilter
+          className="tableListEmployee__globalFilter"
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          setGlobalFilter={setGlobalFilter}
+          globalFilter={state.globalFilter}
+        />
+      </div>
+      <table
+        {...getTableProps()}
+        style={{ border: 'solid 1px #777', width: '100%', margin: '10px 0' }}
+      >
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  style={{
+                    background: 'var(--primary-color)',
+                    color: '#FFF',
+                    fontWeight: 'bold',
+                    padding: '10px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {column.render('Header')}
+                  <span>
+                    {column.isSorted ? (column.isSortedDesc ? ' ▼' : ' ▲') : ''}
+                  </span>
+                </th>
+              ))}
             </tr>
-          )
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+
+        <tbody {...getTableBodyProps()}>
+          {page.map((row, id) => {
+            prepareRow(row)
+
+            return (
+              <tr
+                {...row.getRowProps()}
+                style={
+                  isEven(id)
+                    ? { background: 'var(--primary-color-light-2)' }
+                    : null
+                }
+              >
+                {row.cells.map((cell) => {
+                  return (
+                    <td
+                      {...cell.getCellProps()}
+                      style={{
+                        padding: '10px',
+                      }}
+                    >
+                      {cell.render('Cell')}
+                    </td>
+                  )
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+      <div className="tableListEmployee__footer">
+        <TablePagination
+          className="tableListEmployee__pagination"
+          state={state}
+          canPreviousPage={canPreviousPage}
+          canNextPage={canNextPage}
+          pageOptions={pageOptions}
+          pageCount={pageCount}
+          gotoPage={gotoPage}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          setPageSize={setPageSize}
+        />
+      </div>
+    </div>
   )
 }
 
