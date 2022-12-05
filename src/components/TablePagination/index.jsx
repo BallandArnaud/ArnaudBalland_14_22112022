@@ -1,3 +1,5 @@
+import './index.css'
+
 const TablePagination = ({
   className,
   state,
@@ -10,28 +12,32 @@ const TablePagination = ({
   nextPage,
   setPageSize,
 }) => {
+  const pagesSize = [10, 25, 50, 100]
+
   return (
-    <div className={className}>
-      <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-        {'<<'}
-      </button>{' '}
-      <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-        {'<'}
-      </button>{' '}
-      <button onClick={() => nextPage()} disabled={!canNextPage}>
-        {'>'}
-      </button>{' '}
-      <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-        {'>>'}
-      </button>{' '}
+    <div className={'pagination ' + className}>
+      <div className="pagination__buttons">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {'<<'}
+        </button>
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {'<'}
+        </button>
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </button>
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </button>
+      </div>
       <span>
         Page{' '}
         <strong>
           {state.pageIndex + 1} of {pageOptions.length}
-        </strong>{' '}
+        </strong>
       </span>
       <span>
-        | Go to page:
+        | Go to page:{' '}
         <input
           type="number"
           defaultValue={state.pageIndex + 1}
@@ -41,21 +47,23 @@ const TablePagination = ({
           }}
           style={{ width: '100px' }}
         />
-      </span>{' '}
-      <span>Show </span>
-      <select
-        value={state.pageSize}
-        onChange={(e) => {
-          setPageSize(Number(e.target.value))
-        }}
-      >
-        {[10, 25, 50, 100].map((pageSize) => (
-          <option key={pageSize} value={pageSize}>
-            {pageSize}
-          </option>
-        ))}
-      </select>
-      <span> entries</span>
+      </span>
+      <div className="pagination__select">
+        <span>Show</span>
+        <select
+          value={state.pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value))
+          }}
+        >
+          {pagesSize.map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              {pageSize}
+            </option>
+          ))}
+        </select>
+        <span>entries</span>
+      </div>
     </div>
   )
 }

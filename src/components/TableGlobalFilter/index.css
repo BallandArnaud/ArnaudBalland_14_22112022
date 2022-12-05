@@ -1,0 +1,24 @@
+.globalFilter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.globalFilter label {
+  margin-right: 10px;
+}
+
+.globalFilter input{
+  padding: 8px;
+  border: 1px solid hsl(0, 0%, 80%);
+  outline: 1px solid transparent;
+}
+
+.globalFilter input:hover{
+  border-color: hsl(0, 0%, 70%);
+}
+
+.globalFilter input:focus{
+  border: 1px solid var(--primary-color);
+  outline: 1px solid var(--primary-color);
+}

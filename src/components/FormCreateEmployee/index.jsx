@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import Select from 'react-select'
 import { states, departments } from '../../data/formData'
 import { addEmployee } from '../../features/employeeSlice'
+import './index.css'
 
 const FormCreateEmployee = () => {
   const inputFirstName = useRef()
@@ -13,6 +15,16 @@ const FormCreateEmployee = () => {
   const [stateAddress, setStateAddress] = useState(states[0].name)
   const [department, setdepartment] = useState(departments[0])
   const dispatch = useDispatch()
+
+  const optionsState = states.map((state) => ({
+    label: state.name,
+    value: state.abbreviation,
+  }))
+
+  const optionsDepartment = departments.map((department) => ({
+    label: department,
+    value: department,
+  }))
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -37,7 +49,7 @@ const FormCreateEmployee = () => {
   }
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
+    <form className="formCreateEmployee" onSubmit={(e) => handleSubmit(e)}>
       <label htmlFor="form__firstName">First Name</label>
       <input type="text" id="form__firstName" ref={inputFirstName} required />
       <label htmlFor="form__lastName">Last Name</label>
@@ -51,37 +63,42 @@ const FormCreateEmployee = () => {
         <label htmlFor="form__city">City</label>
         <input type="text" id="form__city" ref={inputCity} required />
         <label htmlFor="form__state">State</label>
-        <select
-          name="state"
-          id="form__state"
-          value={stateAddress}
-          onChange={(e) => setStateAddress(e.target.value)}
-        >
-          {states.map((state) => {
-            return (
-              <option key={state.name} value={state.name}>
-                {state.name}
-              </option>
-            )
+        <Select
+          id="form__department"
+          className="select"
+          defaultValue={optionsState[0]}
+          options={optionsState}
+          theme={(theme) => ({
+            ...theme,
+            borderRadius: 0,
+            colors: {
+              ...theme.colors,
+              primary25: 'var(--primary-color-light-2)',
+              primary: 'var(--primary-color)',
+            },
           })}
-        </select>
+          onChange={(selectedOption) => setStateAddress(selectedOption.label)}
+        />
         <label htmlFor="form__zipCode">Zip code</label>
         <input type="number" id="form__zipCode" ref={inputZipCode} required />
       </fieldset>
-      <label htmlFor="form__departement">Department</label>
-      <select
-        id="form__departement"
-        value={department}
-        onChange={(e) => setdepartment(e.target.value)}
-      >
-        {departments.map((department) => {
-          return (
-            <option key={department} value={department}>
-              {department}
-            </option>
-          )
+      <label htmlFor="form__department">Department</label>
+      <Select
+        id="form__department"
+        className="select"
+        defaultValue={optionsDepartment[0]}
+        options={optionsDepartment}
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 0,
+          colors: {
+            ...theme.colors,
+            primary25: 'var(--primary-color-light-2)',
+            primary: 'var(--primary-color)',
+          },
         })}
-      </select>
+        onChange={(selectedOption) => setdepartment(selectedOption.label)}
+      />
       <button type="submit">Save</button>
     </form>
   )

@@ -10,6 +10,7 @@ import { selectEmployee } from '../../app/selectors'
 import { isEven } from '../../utils/functionsUtils'
 import GlobalFilter from '../TableGlobalFilter'
 import TablePagination from '../TablePagination'
+import './index.css'
 
 const TableListEmployee = () => {
   const employeesData = useSelector(selectEmployee())
@@ -83,64 +84,76 @@ const TableListEmployee = () => {
           globalFilter={state.globalFilter}
         />
       </div>
-      <table
-        {...getTableProps()}
-        style={{ border: 'solid 1px #777', width: '100%', margin: '10px 0' }}
+      <div
+        className="tableListEmployee__table"
+        style={{ overflowX: 'auto', marginBottom: '10px' }}
       >
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  style={{
-                    background: 'var(--primary-color)',
-                    color: '#FFF',
-                    fontWeight: 'bold',
-                    padding: '10px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {column.render('Header')}
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? ' ▼' : ' ▲') : ''}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-
-        <tbody {...getTableBodyProps()}>
-          {page.map((row, id) => {
-            prepareRow(row)
-
-            return (
-              <tr
-                {...row.getRowProps()}
-                style={
-                  isEven(id)
-                    ? { background: 'var(--primary-color-light-2)' }
-                    : null
-                }
-              >
-                {row.cells.map((cell) => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        padding: '10px',
-                      }}
-                    >
-                      {cell.render('Cell')}
-                    </td>
-                  )
-                })}
+        <table
+          {...getTableProps()}
+          style={{
+            border: 'solid 1px #777',
+            width: '100%',
+          }}
+        >
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    style={{
+                      background: 'var(--primary-color)',
+                      color: '#FFF',
+                      fontWeight: 'bold',
+                      padding: '10px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {column.render('Header')}
+                    <span>
+                      {column.isSorted
+                        ? column.isSortedDesc
+                          ? ' ▼'
+                          : ' ▲'
+                        : ''}
+                    </span>
+                  </th>
+                ))}
               </tr>
-            )
-          })}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+
+          <tbody {...getTableBodyProps()}>
+            {page.map((row, id) => {
+              prepareRow(row)
+
+              return (
+                <tr
+                  {...row.getRowProps()}
+                  style={
+                    isEven(id)
+                      ? { background: 'var(--primary-color-light-2)' }
+                      : null
+                  }
+                >
+                  {row.cells.map((cell) => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        style={{
+                          padding: '10px',
+                        }}
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
       <div className="tableListEmployee__footer">
         <TablePagination
           className="tableListEmployee__pagination"

@@ -1,0 +1,72 @@
+.formCreateEmployee{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.formCreateEmployee label{
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.formCreateEmployee input,
+.formCreateEmployee select,
+.formCreateEmployee textarea{
+  display: block;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid hsl(0, 0%, 80%);
+  transition: border-color .1s ease;
+  outline: 1px solid transparent;
+}
+
+.formCreateEmployee input:hover,
+.formCreateEmployee select:hover,
+.formCreateEmployee textarea:hover{
+  border-color: hsl(0, 0%, 70%);
+}
+
+.formCreateEmployee input:focus,
+.formCreateEmployee select:focus,
+.formCreateEmployee textarea:focus{
+  border-color: var(--primary-color);
+  outline-color: var(--primary-color);
+}
+
+.formCreateEmployee fieldset{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-inline: 0;
+  margin-bottom: 10px;
+}
+
+.formCreateEmployee .select {
+  margin-bottom: 10px;
+}
+
+.formCreateEmployee button{
+  color: #FFF;
+  background-color: var(--primary-color);
+  padding: 10px;
+  font-weight: 600;
+  border: 1px solid var(--primary-color);
+  cursor: pointer;
+  transition: background-color .3s ease;
+}
+
+.formCreateEmployee button:hover{
+  background-color: var(--primary-color-dark-1);
+}
+
+@media screen and (min-width: 760px) {
+  .formCreateEmployee{
+    width: 50%;
+    min-width: 740px;
+    display: flex;
+    flex-direction: column;
+    margin-inline: auto;
+  }
+}

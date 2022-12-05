@@ -1,0 +1,8 @@
+.tableListEmployee__header{
+  margin-bottom: 10px;
+}
+
+.tableListEmployee__table {
+  overflow-x: auto;
+  margin-bottom: 10px;
+}

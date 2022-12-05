@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAsyncDebounce } from 'react-table'
+import './index.css'
 
 const GlobalFilter = ({
   className,
@@ -14,11 +15,11 @@ const GlobalFilter = ({
   }, 300)
 
   return (
-    <div className={className}>
-      <label htmlFor="globalFilter">Search: </label>
+    <div className={'globalFilter ' + className}>
+      <label htmlFor="input__globalFilter">Search: </label>
       <input
         type="text"
-        id="globalFilter"
+        id="input__globalFilter"
         value={value || ''}
         onChange={(e) => {
           setValue(e.target.value)
