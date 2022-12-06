@@ -28,6 +28,10 @@ const TableListEmployee = () => {
         accessor: 'lastName',
       },
       {
+        Header: 'Start Date',
+        accessor: 'startDate',
+      },
+      {
         Header: 'Department',
         accessor: 'department',
       },

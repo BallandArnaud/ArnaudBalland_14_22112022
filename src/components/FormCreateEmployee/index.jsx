@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import Select from 'react-select'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.min.css'
 import { states, departments } from '../../data/formData'
 import { addEmployee } from '../../features/employeeSlice'
 import './index.css'
@@ -9,9 +11,12 @@ const FormCreateEmployee = () => {
   const inputFirstName = useRef()
   const inputLastName = useRef()
   const inputDateBirth = useRef()
+  const inputStartDate = useRef()
   const inputStreet = useRef()
   const inputCity = useRef()
   const inputZipCode = useRef()
+  const [startDate, setStartDate] = useState(null)
+  const [birthDate, setbirthDate] = useState(null)
   const [stateAddress, setStateAddress] = useState(states[0].name)
   const [department, setdepartment] = useState(departments[0])
   const dispatch = useDispatch()
@@ -37,7 +42,8 @@ const FormCreateEmployee = () => {
       addEmployee({
         firstName: inputFirstName.current.value,
         lastName: inputLastName.current.value,
-        dateOfBirth: inputDateBirth.current.value,
+        dateOfBirth: birthDate.toLocaleDateString('en-US'),
+        startDate: startDate.toLocaleDateString('en-US'),
         department: department,
         street: inputStreet.current.value,
         city: inputCity.current.value,
@@ -55,7 +61,25 @@ const FormCreateEmployee = () => {
       <label htmlFor="form__lastName">Last Name</label>
       <input type="text" id="form__lastName" ref={inputLastName} required />
       <label htmlFor="form__dateBirth">Date of Birth</label>
-      <input type="text" id="form__dateBirth" ref={inputDateBirth} required />
+      <DatePicker
+        id="form__dateBirth"
+        className="custom-calendar-input"
+        calendarClassName="custom-calendar"
+        selected={birthDate}
+        onChange={(date) => setbirthDate(date)}
+        dateFormat="MM/dd/yyyy"
+        required
+      />
+      <label htmlFor="form__startDate">Start Date</label>
+      <DatePicker
+        id="form__startDate"
+        className="custom-calendar-input"
+        calendarClassName="custom-calendar"
+        selected={startDate}
+        onChange={(date) => setStartDate(date)}
+        dateFormat="MM/dd/yyyy"
+        required
+      />
       <fieldset>
         <legend>Address</legend>
         <label htmlFor="form__street">Street</label>
@@ -99,7 +123,9 @@ const FormCreateEmployee = () => {
         })}
         onChange={(selectedOption) => setdepartment(selectedOption.label)}
       />
-      <button type="submit">Save</button>
+      <button className="btn" type="submit">
+        Save
+      </button>
     </form>
   )
 }
