@@ -62,19 +62,7 @@
 }
 
 .custom-calendar-input {
-  padding: 8px;
-  border: 1px solid hsl(0, 0%, 80%);
-  outline: 1px solid transparent;
   width: 100%;
-}
-
-.custom-calendar-input:hover {
-  border: 1px solid hsl(0, 0%, 70%);
-}
-
-.custom-calendar-input:focus {
-  border: 1px solid var(--primary-color);
-  outline: 1px solid var(--primary-color);
 }
 
 .custom-calendar .react-datepicker__day--selected {
@@ -93,6 +81,37 @@
   left: -50px !important;
 }
 
+.customModal .reactModalLib__container {
+  width: 100%;
+  max-width: 70%;
+  max-height: 500px;
+  padding: 0;
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+
+.customModal .reactModalLib__btnClose {
+  background-color: #3b3b3b;
+}
+
+.customModal .reactModalLib__btnClose:hover {
+  background-color: #000;
+}
+
+.customModal__header {
+  color: #FFF;
+  background-color: var(--primary-color);
+  padding: 10px;
+}
+
+.customModal__header h2{
+  margin: 0;
+}
+
+.customModal__body p{
+  margin: 0;
+  padding: 15px;
+}
+
 @media screen and (min-width: 760px) {
   .formCreateEmployee{
     width: 50%;
@@ -100,5 +119,9 @@
     display: flex;
     flex-direction: column;
     margin-inline: auto;
+  }
+
+  .customModal .reactModalLib__container {
+    max-width: 600px;
   }
 }
