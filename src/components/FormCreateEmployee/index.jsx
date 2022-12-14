@@ -18,7 +18,7 @@ const FormCreateEmployee = () => {
   const [birthDate, setbirthDate] = useState(null)
   const [stateAddress, setStateAddress] = useState(states[0].name)
   const [department, setdepartment] = useState(departments[0])
-  const [modalIsOpen, setIsModalOpen] = useState(true)
+  const [modalIsOpen, setIsModalOpen] = useState(false)
   const dispatch = useDispatch()
 
   const optionsState = states.map((state) => ({
@@ -71,6 +71,11 @@ const FormCreateEmployee = () => {
           selected={birthDate}
           onChange={(date) => setbirthDate(date)}
           dateFormat="MM/dd/yyyy"
+          peekNextMonth
+          showMonthDropdown
+          showYearDropdown
+          dropdownMode="select"
+          todayButton="Today"
           required
         />
         <label htmlFor="form__startDate">Start Date</label>
@@ -81,6 +86,11 @@ const FormCreateEmployee = () => {
           selected={startDate}
           onChange={(date) => setStartDate(date)}
           dateFormat="MM/dd/yyyy"
+          peekNextMonth
+          showMonthDropdown
+          showYearDropdown
+          dropdownMode="select"
+          todayButton="Today"
           required
         />
         <fieldset>
