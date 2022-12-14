@@ -52,8 +52,14 @@ button[disabled]{
   margin-inline: 10px;
 }
 
-.pagination>* {
+.pagination > * {
   margin-bottom: 10px;
+}
+
+.pagination__select {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 @media screen and (min-width: 760px) {

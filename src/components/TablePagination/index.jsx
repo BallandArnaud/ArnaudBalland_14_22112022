@@ -1,3 +1,4 @@
+import Select from 'react-select'
 import './index.css'
 
 const TablePagination = ({
@@ -13,6 +14,15 @@ const TablePagination = ({
   setPageSize,
 }) => {
   const pagesSize = [10, 25, 50, 100]
+
+  const optionsPagesSize = pagesSize.map((pageSize) => ({
+    label: pageSize,
+    value: pageSize,
+  }))
+
+  const handleOnChangePageSize = (option) => {
+    setPageSize(option.value)
+  }
 
   return (
     <div className={'pagination ' + className}>
@@ -50,18 +60,23 @@ const TablePagination = ({
       </span>
       <div className="pagination__select">
         <span>Show</span>
-        <select
-          value={state.pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value))
-          }}
-        >
-          {pagesSize.map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              {pageSize}
-            </option>
-          ))}
-        </select>
+        <Select
+          id="pagination__pageSize"
+          className="select"
+          defaultValue={optionsPagesSize[0]}
+          options={optionsPagesSize}
+          theme={(theme) => ({
+            ...theme,
+            borderRadius: 0,
+            colors: {
+              ...theme.colors,
+              primary25: 'var(--primary-color-light-2)',
+              primary: 'var(--primary-color)',
+            },
+          })}
+          onChange={(selectedOption) => handleOnChangePageSize(selectedOption)}
+        />
+
         <span>entries</span>
       </div>
     </div>
