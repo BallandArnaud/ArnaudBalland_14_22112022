@@ -1,14 +1,20 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, lazy, useTransition } from 'react'
 import { useDispatch } from 'react-redux'
 import Select from 'react-select'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.min.css'
 import { states, departments } from '../../data/formData'
 import { addEmployee } from '../../features/employeeSlice'
-import { Modal } from 'arnaudballand-react-modal-library'
 import './index.css'
 
+const Modal = lazy(() =>
+  import('arnaudballand-react-modal-library').then((module) => {
+    return { default: module.Modal }
+  })
+)
+
 const FormCreateEmployee = () => {
+  const [, startTransition] = useTransition()
   const inputFirstName = useRef()
   const inputLastName = useRef()
   const inputStreet = useRef()
@@ -18,6 +24,7 @@ const FormCreateEmployee = () => {
   const [birthDate, setbirthDate] = useState(null)
   const [stateAddress, setStateAddress] = useState(states[0].name)
   const [department, setdepartment] = useState(departments[0])
+  const [modalIsLoaded, setModalIsLoaded] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const dispatch = useDispatch()
 
@@ -38,7 +45,10 @@ const FormCreateEmployee = () => {
       (state) => state.name === stateAddress
     ).abbreviation
 
-    setIsModalOpen(true)
+    startTransition(() => {
+      setModalIsLoaded(true)
+      setIsModalOpen(true)
+    })
 
     dispatch(
       addEmployee({
@@ -139,18 +149,20 @@ const FormCreateEmployee = () => {
           Save
         </button>
       </form>
-      <Modal
-        className="customModal"
-        isOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      >
-        <div className="customModal__header">
-          <h2>Success</h2>
-        </div>
-        <div className="customModal__body">
-          <p>Employee Created!</p>
-        </div>
-      </Modal>
+      {modalIsLoaded && (
+        <Modal
+          className="customModal"
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        >
+          <div className="customModal__header">
+            <h2>Success</h2>
+          </div>
+          <div className="customModal__body">
+            <p>Employee Created!</p>
+          </div>
+        </Modal>
+      )}
     </>
   )
 }
