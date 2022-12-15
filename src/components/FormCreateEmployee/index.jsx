@@ -53,7 +53,6 @@ const FormCreateEmployee = () => {
         zipCode: inputZipCode.current.value,
       })
     )
-    console.log('formulaire envoyé')
   }
 
   return (
@@ -101,7 +100,7 @@ const FormCreateEmployee = () => {
           <input type="text" id="form__city" ref={inputCity} required />
           <label htmlFor="form__state">State</label>
           <Select
-            id="form__department"
+            id="form__state"
             className="select"
             defaultValue={optionsState[0]}
             options={optionsState}
