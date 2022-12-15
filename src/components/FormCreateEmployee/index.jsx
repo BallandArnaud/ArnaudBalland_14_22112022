@@ -18,7 +18,7 @@ const FormCreateEmployee = () => {
   const [birthDate, setbirthDate] = useState(null)
   const [stateAddress, setStateAddress] = useState(states[0].name)
   const [department, setdepartment] = useState(departments[0])
-  const [modalIsOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const dispatch = useDispatch()
 
   const optionsState = states.map((state) => ({
@@ -141,7 +141,7 @@ const FormCreateEmployee = () => {
       </form>
       <Modal
         className="customModal"
-        isOpen={modalIsOpen}
+        isOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       >
         <div className="customModal__header">
